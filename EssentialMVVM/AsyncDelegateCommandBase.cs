@@ -5,6 +5,8 @@ namespace EssentialMVVM
 {
     public abstract class AsyncDelegateCommandBase : DelegateCommandBase
     {
+        private static readonly Task CompletedTask = Task.FromResult(true);
+
         public bool IsExecuting => _executionTask != null;
 
         private Task _executionTask;
@@ -40,7 +42,7 @@ namespace EssentialMVVM
             }
         }
 
-        public Task WaitForCompletionAsync() => ExecutionTask ?? Task.CompletedTask;
+        public Task WaitForCompletionAsync() => ExecutionTask ?? CompletedTask;
 
         protected abstract void OnError(object parameter, Exception exception);
         protected abstract bool CanExecuteCore(object parameter);
