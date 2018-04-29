@@ -7,10 +7,10 @@ namespace EssentialMVVM
 {
     public abstract class BindableBase : INotifyPropertyChanged
     {
-        private static readonly SetPropertyResult _notChangedResult = new NotChangedSetPropertyResult();
+        private static readonly SetPropertyResult NotChangedResult = new NotChangedSetPropertyResult();
         private readonly SetPropertyResult _changedResult;
 
-        public BindableBase()
+        protected BindableBase()
         {
             _changedResult = new ChangedSetPropertyResult(OnPropertyChanged);
         }
@@ -24,21 +24,21 @@ namespace EssentialMVVM
         }
 
         [NotifyPropertyChangedInvocator]
-        protected SetPropertyResult Set<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        protected SetPropertyResult Set<T>(
+            ref T field,
+            T newValue,
+            IEqualityComparer<T> comparer = null,
+            [CallerMemberName] string propertyName = null)
         {
-            if (AreEqual(field, newValue, propertyName))
+            comparer = comparer ?? EqualityComparer<T>.Default;
+            if (comparer.Equals(field, newValue))
             {
-                return _notChangedResult;
+                return NotChangedResult;
             }
 
             field = newValue;
             OnPropertyChanged(propertyName);
             return _changedResult;
-        }
-
-        protected virtual bool AreEqual<T>(T currentValue, T newValue, string propertyName)
-        {
-            return EqualityComparer<T>.Default.Equals(currentValue, newValue);
         }
     }
 }
