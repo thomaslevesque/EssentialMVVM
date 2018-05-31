@@ -17,7 +17,7 @@ namespace EssentialMVVM
             _onError = onError;
         }
 
-        protected override void OnError(object parameter, Exception exception) => _onError(exception);
+        protected override void OnError(object parameter, Exception exception) => _onError?.Invoke(exception);
 
         protected override bool CanExecuteCore(object parameter) => _canExecute?.Invoke() ?? true;
 
@@ -32,12 +32,12 @@ namespace EssentialMVVM
 
         public AsyncDelegateCommand([NotNull] Func<T, Task> executeAsync, Func<T, bool> canExecute = null, Action<T, Exception> onError = null)
         {
+            _executeAsync = executeAsync ?? throw new ArgumentNullException(nameof(executeAsync));
             _canExecute = canExecute;
             _onError = onError;
-            _executeAsync = executeAsync ?? throw new ArgumentNullException(nameof(executeAsync));
         }
 
-        protected override void OnError(object parameter, Exception exception) => _onError((T) parameter, exception);
+        protected override void OnError(object parameter, Exception exception) => _onError?.Invoke((T) parameter, exception);
 
         protected override bool CanExecuteCore(object parameter) => _canExecute?.Invoke((T) parameter) ?? true;
 
