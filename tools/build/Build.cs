@@ -44,8 +44,8 @@ namespace build
             string packagesDir = Path.Combine(artifactsDir, "packages");
 
             string solutionFile = "EssentialMVVM.sln";
-            string libraryProject = "EssentialMVVM/EssentialMVVM.csproj";
-            string testProject = "EssentialMVVM.Tests/EssentialMVVM.Tests.csproj";
+            string libraryProject = "src/EssentialMVVM/EssentialMVVM.csproj";
+            string testProject = "tests/EssentialMVVM.Tests/EssentialMVVM.Tests.csproj";
 
             string version = GetVersion();
 
