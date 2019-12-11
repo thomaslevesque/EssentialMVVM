@@ -57,21 +57,33 @@ namespace EssentialMVVM.Tests
             vm.CallbackCount.Should().Be(0);
         }
 
+        [Fact]
+        public void Command_CanExecuteChanged_is_raised_when_property_is_modified()
+        {
+            bool canExecuteChangedWasRaised = false;
+            var vm = new MyViewModel();
+            vm.TheCommand.CanExecuteChanged += (sender, e) => canExecuteChangedWasRaised = true;
+            vm.X = 42;
+            canExecuteChangedWasRaised.Should().BeTrue();
+        }
+
         class MyViewModel : BindableBase
         {
             private int _x;
             public int X
             {
                 get => _x;
-                set =>
-                    Set(ref _x, value)
+                set => Set(ref _x, value)
                     .AndNotifyPropertyChanged(nameof(Y))
-                    .AndExecute(() => CallbackCount++);
+                    .AndExecute(() => CallbackCount++)
+                    .AndRaiseCanExecuteChanged(TheCommand);
             }
 
             public int Y => X + 1;
 
             public int CallbackCount { get; set; }
+
+            public DelegateCommand TheCommand { get; } = new DelegateCommand(() => { });
         }
     }
 }
