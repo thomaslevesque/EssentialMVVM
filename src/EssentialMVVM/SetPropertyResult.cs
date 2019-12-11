@@ -7,6 +7,7 @@ namespace EssentialMVVM
         public abstract bool HasChanged { get; }
         public abstract SetPropertyResult AndNotifyPropertyChanged(string propertyName);
         public abstract SetPropertyResult AndExecute(Action action);
+        public abstract SetPropertyResult AndRaiseCanExecuteChanged(DelegateCommandBase command);
 
         public static implicit operator bool(SetPropertyResult result) => result.HasChanged;
         public static bool operator true(SetPropertyResult result) => result.HasChanged;
@@ -35,6 +36,12 @@ namespace EssentialMVVM
             action();
             return this;
         }
+
+        public override SetPropertyResult AndRaiseCanExecuteChanged(DelegateCommandBase command)
+        {
+            command?.RaiseCanExecuteChanged();
+            return this;
+        }
     }
 
     internal class NotChangedSetPropertyResult : SetPropertyResult
@@ -42,5 +49,6 @@ namespace EssentialMVVM
         public override bool HasChanged => false;
         public override SetPropertyResult AndNotifyPropertyChanged(string propertyName) => this;
         public override SetPropertyResult AndExecute(Action action) => this;
+        public override SetPropertyResult AndRaiseCanExecuteChanged(DelegateCommandBase command) => this;
     }
 }
