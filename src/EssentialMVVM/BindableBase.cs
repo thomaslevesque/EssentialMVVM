@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace EssentialMVVM
 {
@@ -15,20 +14,18 @@ namespace EssentialMVVM
             _changedResult = new ChangedSetPropertyResult(OnPropertyChanged);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        [NotifyPropertyChangedInvocator]
         protected SetPropertyResult Set<T>(
             ref T field,
             T newValue,
-            IEqualityComparer<T> comparer = null,
-            [CallerMemberName] string propertyName = null)
+            IEqualityComparer<T>? comparer = null,
+            [CallerMemberName] string propertyName = "")
         {
             comparer = comparer ?? EqualityComparer<T>.Default;
             if (comparer.Equals(field, newValue))

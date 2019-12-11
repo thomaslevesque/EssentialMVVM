@@ -9,8 +9,8 @@ namespace EssentialMVVM
 
         public bool IsExecuting => _executionTask != null;
 
-        private Task _executionTask;
-        private Task ExecutionTask
+        private Task? _executionTask;
+        private Task? ExecutionTask
         {
             get => _executionTask;
             set
@@ -20,12 +20,12 @@ namespace EssentialMVVM
             }
         }
 
-        public override bool CanExecute(object parameter)
+        public override bool CanExecute(object? parameter)
         {
             return !IsExecuting && CanExecuteCore(parameter);
         }
 
-        public override async void Execute(object parameter)
+        public override async void Execute(object? parameter)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace EssentialMVVM
             }
             catch (Exception ex)
             {
-                OnError(parameter, ex);
+                OnError(ex);
             }
             finally
             {
@@ -44,8 +44,8 @@ namespace EssentialMVVM
 
         public Task WaitForCompletionAsync() => ExecutionTask ?? CompletedTask;
 
-        protected abstract void OnError(object parameter, Exception exception);
-        protected abstract bool CanExecuteCore(object parameter);
-        protected abstract Task ExecuteAsyncCore(object parameter);
+        protected abstract void OnError(Exception exception);
+        protected abstract bool CanExecuteCore(object? parameter);
+        protected abstract Task ExecuteAsyncCore(object? parameter);
     }
 }
