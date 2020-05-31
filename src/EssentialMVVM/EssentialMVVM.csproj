@@ -8,7 +8,7 @@
     <Title>Essential MVVM</Title>
     <Description>A minimalist MVVM framework</Description>
     <PackageTags>mvvm;framework;minimalist</PackageTags>
-    <PackageLicenseUrl>https://github.com/thomaslevesque/EssentialMVVM/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
