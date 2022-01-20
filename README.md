@@ -4,15 +4,15 @@
 [![AppVeyor build](https://img.shields.io/appveyor/ci/thomaslevesque/essentialmvvm.svg?logo=appveyor)](https://ci.appveyor.com/project/thomaslevesque/essentialmvvm)
 [![AppVeyor tests](https://img.shields.io/appveyor/tests/thomaslevesque/essentialmvvm.svg?logo=appveyor)](https://ci.appveyor.com/project/thomaslevesque/essentialmvvm/build/tests)
 
-A minimalist MVVM framework, which contains the basic building blocks I was tired to
-rewrite in each of my projects. It doesn't do much, but strives to do it well.
+A minimalist MVVM framework, which contains the basic building blocks I was tired of
+rewriting in each of my projects. It doesn't do much, but strives to do it well.
 
 It targets .NET Framework 4.5, .NET Standard 1.3 and .NET Standard 2.0, so it should be
 usable on most XAML platforms.
 
 ## Features
 
-### `BindingBase`
+### `BindableBase`
 
 A class that implements `INotifyPropertyChanged` and can be used as a  base class for
 ViewModels. It exposes two methods:
